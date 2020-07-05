@@ -7,32 +7,26 @@ var WebMonetizationLibrary = {
     },
 
     WebMonetization_PlatformSetEventListener: function(listener) {
-        console.log("WebMonetization set event listener");
         Context.listener = listener;
 
         document.monetization.addEventListener("monetizationpending", event => {
-    		console.log("monetizationpending");
             dynCall("vi", Context.listener, [allocate(intArrayFromString("monetizationpending"), "i8", ALLOC_STACK)]);
-    	});
-    	document.monetization.addEventListener("monetizationstart", event => {
-    		console.log("monetizationstart");
+        });
+        document.monetization.addEventListener("monetizationstart", event => {
             dynCall("vi", Context.listener, [allocate(intArrayFromString("monetizationstart"), "i8", ALLOC_STACK)]);
-    	});
-    	document.monetization.addEventListener("monetizationprogress", event => {
-    		console.log("monetizationprogress");
+        });
+        document.monetization.addEventListener("monetizationprogress", event => {
             dynCall("vi", Context.listener, [allocate(intArrayFromString("monetizationprogress"), "i8", ALLOC_STACK)]);
-    	});
-    	document.monetization.addEventListener("monetizationstop", event => {
-    		console.log("monetizationstop");
+        });
+        document.monetization.addEventListener("monetizationstop", event => {
             dynCall("vi", Context.listener, [allocate(intArrayFromString("monetizationstop"), "i8", ALLOC_STACK)]);
-    	});
+        });
     },
 
     WebMonetization_PlatformIsMonetized: function() {
-        console.log("WebMonetization ismonetized");
         return document.monetization != undefined && document.monetization.state == "started";
     }
-
+    
 };
 
 autoAddDeps(WebMonetizationLibrary, "$Context");
