@@ -1,47 +1,18 @@
 function init(self)
-	print("init")
-	pprint(webmonetization)
+	local monetized = webmonetization.is_monetized()
+	if monetized then
+		print("The user has an active payment stream")
+	end
+
 	webmonetization.set_listener(function(self, event)
-		print(self, event)
-		print("is_monetized", webmonetization.is_monetized())
+		if event == webmonetization.EVENT_PENDING then
+			print("The user is trying to make a first payment")
+		elseif event == webmonetization.EVENT_START then
+			print("The user has started paying")
+		elseif event == webmonetization.EVENT_PROGRESS then
+			print("The user is still paying")
+		elseif event == webmonetization.EVENT_STOP then
+			print("The user has stopped paying")
+		end
 	end)
-	-- Add initialization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
-end
-
-function final(self)
-	-- Add finalization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
-end
-
-function update(self, dt)
-	-- Add update code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
-end
-
-function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Learn more: https://defold.com/manuals/message-passing/
-	-- Remove this function if not needed
-end
-
-function on_input(self, action_id, action)
-	-- Add input-handling code here. The game object this script is attached to
-	-- must have acquired input focus:
-	--
-	--    msg.post(".", "acquire_input_focus")
-	--
-	-- All mapped input bindings will be received. Mouse and touch input will
-	-- be received regardless of where on the screen it happened.
-	-- Learn more: https://defold.com/manuals/input/
-	-- Remove this function if not needed
-end
-
-function on_reload(self)
-	-- Add reload-handling code here
-	-- Learn more: https://defold.com/manuals/hot-reload/
-	-- Remove this function if not needed
 end
