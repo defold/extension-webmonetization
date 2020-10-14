@@ -38,7 +38,7 @@ if monetized then
 	print("The user has an active payment stream")
 end
 
-webmonetization.set_listener(function(self, event)
+webmonetization.set_listener(function(self, event, details)
 	if event == webmonetization.EVENT_PENDING then
 		print("The user is trying to make a first payment")
 	elseif event == webmonetization.EVENT_START then
@@ -48,5 +48,18 @@ webmonetization.set_listener(function(self, event)
 	elseif event == webmonetization.EVENT_STOP then
 		print("The user has stopped paying")
 	end
+	print(details.requestId)
 end)
+```
+
+The details table contains additional information about the event. Example:
+
+```
+{
+  paymentPointer = "$ilp.uphold.com/QkG86UgXzKq8",
+  assetScale = 9,
+  amount = "26009",
+  requestId = "a1f728aa-21e0-4376-ae99-0ccb22642956",
+  assetCode = "XRP"
+}
 ```

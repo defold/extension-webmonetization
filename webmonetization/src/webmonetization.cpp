@@ -27,23 +27,48 @@ static void lua_setfieldstringstring(lua_State* L, const char* key, const char* 
 }
 
 
-static void WebMonetization_OnEventListener(const char* event)
+static void WebMonetization_OnEventListener(const char* event, const char* details)
 {
 
 	lua_State* L = dmScript::GetCallbackLuaContext(g_WebMonetization.m_Callback);
 
 	DM_LUA_STACK_CHECK(L, 0);
+
+	if (!dmScript::IsCallbackValid(g_WebMonetization.m_Callback))
+	{
+		dmScript::DestroyCallback(g_WebMonetization.m_Callback);
+		g_WebMonetization.m_Callback = 0;
+		return;
+	}
+
 	if (!dmScript::SetupCallback(g_WebMonetization.m_Callback))
 	{
+		dmScript::DestroyCallback(g_WebMonetization.m_Callback);
+		g_WebMonetization.m_Callback = 0;
 		return;
 	}
 
 	lua_pushstring(L, event);
-	int ret = lua_pcall(L, 2, 0, 0);
-	if (ret != 0)
+
+	dmJson::Document json;
+	dmJson::Result r = dmJson::Parse(details, &json);
+	if (r != dmJson::RESULT_OK)
 	{
-		lua_pop(L, 1);
+		dmLogError("Unable to parse monetization details");
+		lua_pushnil(L);
 	}
+	else
+	{
+		char err_str[128];
+		int convert_r = dmScript::JsonToLua(L, &json, 0, err_str, sizeof(err_str));
+		if (convert_r < 0)
+		{
+			dmLogError("Unable to parse monetization details");
+		}
+		dmJson::Free(&json);
+	}
+
+	dmScript::PCall(L, 3, 0);
 
 	dmScript::TeardownCallback(g_WebMonetization.m_Callback);
 }
@@ -51,6 +76,11 @@ static void WebMonetization_OnEventListener(const char* event)
 static int WebMonetization_SetListener(lua_State* L)
 {
 	DM_LUA_STACK_CHECK(L, 0);
+
+	if (g_WebMonetization.m_Callback)
+	{
+		dmScript::DestroyCallback(g_WebMonetization.m_Callback);
+	}
 
 	g_WebMonetization.m_Callback = dmScript::CreateCallback(L, 1);
 
@@ -108,11 +138,13 @@ dmExtension::Result InitializeWebMonetizationExtension(dmExtension::Params* para
 
 dmExtension::Result AppFinalizeWebMonetizationExtension(dmExtension::AppParams* params)
 {
+	#if defined(DM_PLATFORM_HTML5)
 	if (g_WebMonetization.m_Callback != 0)
 	{
 		dmScript::DestroyCallback(g_WebMonetization.m_Callback);
 		g_WebMonetization.m_Callback = 0;
 	}
+	#endif
 	return dmExtension::RESULT_OK;
 }
 

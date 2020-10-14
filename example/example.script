@@ -4,7 +4,7 @@ function init(self)
 		print("The user has an active payment stream")
 	end
 
-	webmonetization.set_listener(function(self, event)
+	webmonetization.set_listener(function(self, event, details)
 		if event == webmonetization.EVENT_PENDING then
 			print("The user is trying to make a first payment")
 		elseif event == webmonetization.EVENT_START then
@@ -13,6 +13,9 @@ function init(self)
 			print("The user is still paying")
 		elseif event == webmonetization.EVENT_STOP then
 			print("The user has stopped paying")
+		else
+			print("Unknown event", event)
 		end
+		pprint(details)
 	end)
 end
