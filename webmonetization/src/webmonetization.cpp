@@ -29,6 +29,10 @@ static void lua_setfieldstringstring(lua_State* L, const char* key, const char* 
 
 static void WebMonetization_OnEventListener(const char* event, const char* details)
 {
+	if (g_WebMonetization.m_Callback == 0)
+	{
+		return;
+	}
 
 	lua_State* L = dmScript::GetCallbackLuaContext(g_WebMonetization.m_Callback);
 
@@ -36,7 +40,6 @@ static void WebMonetization_OnEventListener(const char* event, const char* detai
 
 	if (!dmScript::IsCallbackValid(g_WebMonetization.m_Callback))
 	{
-		dmScript::DestroyCallback(g_WebMonetization.m_Callback);
 		g_WebMonetization.m_Callback = 0;
 		return;
 	}

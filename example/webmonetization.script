@@ -1,0 +1,38 @@
+local function log(message)
+	print(message)
+	label.set_text("#label", message)
+end
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+
+	if webmonetization then
+		local monetized = webmonetization.is_monetized()
+		if monetized then
+			log("The user has an active payment stream")
+		end
+
+		webmonetization.set_listener(function(self, event, details)
+			if event == webmonetization.EVENT_PENDING then
+				log("The user is trying to make a first payment")
+			elseif event == webmonetization.EVENT_START then
+				log("The user has started paying")
+			elseif event == webmonetization.EVENT_PROGRESS then
+				log("The user is still paying")
+			elseif event == webmonetization.EVENT_STOP then
+				log("The user has stopped paying")
+			else
+				log("Unknown event", event)
+			end
+			pprint(details)
+		end)
+	else
+		log("Not supported")
+	end
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("touch") and action.pressed then
+		msg.post("example:/loader", "unload_example")
+	end
+end

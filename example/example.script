@@ -1,21 +1,16 @@
 function init(self)
-	local monetized = webmonetization.is_monetized()
-	if monetized then
-		print("The user has an active payment stream")
-	end
+	msg.post(".", "acquire_input_focus")
+	msg.post("#", "load_example")
+end
 
-	webmonetization.set_listener(function(self, event, details)
-		if event == webmonetization.EVENT_PENDING then
-			print("The user is trying to make a first payment")
-		elseif event == webmonetization.EVENT_START then
-			print("The user has started paying")
-		elseif event == webmonetization.EVENT_PROGRESS then
-			print("The user is still paying")
-		elseif event == webmonetization.EVENT_STOP then
-			print("The user has stopped paying")
-		else
-			print("Unknown event", event)
-		end
-		pprint(details)
-	end)
+
+function on_message(self, message_id, message, sender)
+	print(message_id)
+	if message_id == hash("load_example") then
+		msg.post("#collectionproxy", "async_load")
+	elseif message_id == hash("unload_example") then
+		msg.post("#collectionproxy", "unload")
+	elseif message_id == hash("proxy_loaded") then
+		msg.post(sender, "enable")
+	end
 end
