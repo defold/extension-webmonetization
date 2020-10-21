@@ -9,6 +9,10 @@ var WebMonetizationLibrary = {
     WebMonetization_PlatformSetEventListener: function(listener) {
         Context.listener = listener;
 
+        if (document.monetization === undefined) {
+            return;
+        }
+
         document.monetization.addEventListener("", event => {
             dynCall("vii", Context.listener, [
                 allocate(intArrayFromString("monetizationpending"), "i8", ALLOC_STACK),
@@ -36,7 +40,7 @@ var WebMonetizationLibrary = {
     },
 
     WebMonetization_PlatformIsMonetized: function() {
-        return document.monetization != undefined && document.monetization.state == "started";
+        return document.monetization !== undefined && document.monetization.state == "started";
     }
 
 };
