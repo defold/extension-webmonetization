@@ -14,28 +14,28 @@ var WebMonetizationLibrary = {
         }
 
         document.monetization.addEventListener("", event => {
-            dynCall("vii", Context.listener, [
+            {{{ makeDynCall("vii", "Context.listener") }}} (
                 allocate(intArrayFromString("monetizationpending"), "i8", ALLOC_STACK),
                 allocate(intArrayFromString(JSON.stringify(event.detail !== undefined ? event.detail : {})), "i8", ALLOC_STACK)
-            ]);
+            );
         });
         document.monetization.addEventListener("monetizationstart", event => {
-            dynCall("vii", Context.listener, [
+            {{{ makeDynCall("vii", "Context.listener") }}} (
                 allocate(intArrayFromString("monetizationstart"), "i8", ALLOC_STACK),
                 allocate(intArrayFromString(JSON.stringify(event.detail !== undefined ? event.detail : {})), "i8", ALLOC_STACK)
-            ]);
+            );
         });
         document.monetization.addEventListener("monetizationprogress", event => {
-            dynCall("vii", Context.listener, [
+            {{{ makeDynCall("vii", "Context.listener") }}} (
                 allocate(intArrayFromString("monetizationprogress"), "i8", ALLOC_STACK),
                 allocate(intArrayFromString(JSON.stringify(event.detail !== undefined ? event.detail : {})), "i8", ALLOC_STACK)
-            ]);
+            );
         });
         document.monetization.addEventListener("monetizationstop", event => {
-            dynCall("vii", Context.listener, [
+            {{{ makeDynCall("vii", "Context.listener") }}} (
                 allocate(intArrayFromString("monetizationstop"), "i8", ALLOC_STACK),
                 allocate(intArrayFromString(JSON.stringify(event.detail !== undefined ? event.detail : {})), "i8", ALLOC_STACK)
-            ]);
+            );
         });
     },
 
