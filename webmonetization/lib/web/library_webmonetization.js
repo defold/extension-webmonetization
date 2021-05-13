@@ -15,26 +15,26 @@ var WebMonetizationLibrary = {
 
         document.monetization.addEventListener("", event => {
             {{{ makeDynCall("vii", "Context.listener") }}} (
-                allocate(intArrayFromString("monetizationpending"), "i8", ALLOC_STACK),
-                allocate(intArrayFromString(JSON.stringify(event.detail !== undefined ? event.detail : {})), "i8", ALLOC_STACK)
+                allocate(intArrayFromString("monetizationpending"), ALLOC_STACK),
+                allocate(intArrayFromString(JSON.stringify(event.detail !== undefined ? event.detail : {})), ALLOC_STACK)
             );
         });
         document.monetization.addEventListener("monetizationstart", event => {
             {{{ makeDynCall("vii", "Context.listener") }}} (
-                allocate(intArrayFromString("monetizationstart"), "i8", ALLOC_STACK),
-                allocate(intArrayFromString(JSON.stringify(event.detail !== undefined ? event.detail : {})), "i8", ALLOC_STACK)
+                allocate(intArrayFromString("monetizationstart"), ALLOC_STACK),
+                allocate(intArrayFromString(JSON.stringify(event.detail !== undefined ? event.detail : {})), ALLOC_STACK)
             );
         });
         document.monetization.addEventListener("monetizationprogress", event => {
             {{{ makeDynCall("vii", "Context.listener") }}} (
-                allocate(intArrayFromString("monetizationprogress"), "i8", ALLOC_STACK),
-                allocate(intArrayFromString(JSON.stringify(event.detail !== undefined ? event.detail : {})), "i8", ALLOC_STACK)
+                allocate(intArrayFromString("monetizationprogress"), ALLOC_STACK),
+                allocate(intArrayFromString(JSON.stringify(event.detail !== undefined ? event.detail : {})), ALLOC_STACK)
             );
         });
         document.monetization.addEventListener("monetizationstop", event => {
             {{{ makeDynCall("vii", "Context.listener") }}} (
-                allocate(intArrayFromString("monetizationstop"), "i8", ALLOC_STACK),
-                allocate(intArrayFromString(JSON.stringify(event.detail !== undefined ? event.detail : {})), "i8", ALLOC_STACK)
+                allocate(intArrayFromString("monetizationstop"), ALLOC_STACK),
+                allocate(intArrayFromString(JSON.stringify(event.detail !== undefined ? event.detail : {})), ALLOC_STACK)
             );
         });
     },
