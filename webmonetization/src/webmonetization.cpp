@@ -53,23 +53,8 @@ static void WebMonetization_OnEventListener(const char* event, const char* detai
 
 	lua_pushstring(L, event);
 
-	dmJson::Document json;
-	dmJson::Result r = dmJson::Parse(details, &json);
-	if (r != dmJson::RESULT_OK)
-	{
-		dmLogError("Unable to parse monetization details");
-		lua_pushnil(L);
-	}
-	else
-	{
-		char err_str[128];
-		int convert_r = dmScript::JsonToLua(L, &json, 0, err_str, sizeof(err_str));
-		if (convert_r < 0)
-		{
-			dmLogError("Unable to parse monetization details");
-		}
-		dmJson::Free(&json);
-	}
+
+	dmScript::JsonToLua(L, details, strlen(details)); // throws lua error if it fails
 
 	dmScript::PCall(L, 3, 0);
 
