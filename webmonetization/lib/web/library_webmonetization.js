@@ -15,26 +15,26 @@ var WebMonetizationLibrary = {
 
         document.monetization.addEventListener("", event => {
             {{{ makeDynCall("vii", "Context.listener") }}} (
-                allocate(intArrayFromString("monetizationpending"), ALLOC_STACK),
-                allocate(intArrayFromString(JSON.stringify(event.detail !== undefined ? event.detail : {})), ALLOC_STACK)
+                stringToUTF8OnStack("monetizationpending"),
+                stringToUTF8OnStack(JSON.stringify(event.detail !== undefined ? event.detail : {}))
             );
         });
         document.monetization.addEventListener("monetizationstart", event => {
             {{{ makeDynCall("vii", "Context.listener") }}} (
-                allocate(intArrayFromString("monetizationstart"), ALLOC_STACK),
-                allocate(intArrayFromString(JSON.stringify(event.detail !== undefined ? event.detail : {})), ALLOC_STACK)
+                stringToUTF8OnStack("monetizationstart"),
+                stringToUTF8OnStack(JSON.stringify(event.detail !== undefined ? event.detail : {}))
             );
         });
         document.monetization.addEventListener("monetizationprogress", event => {
             {{{ makeDynCall("vii", "Context.listener") }}} (
-                allocate(intArrayFromString("monetizationprogress"), ALLOC_STACK),
-                allocate(intArrayFromString(JSON.stringify(event.detail !== undefined ? event.detail : {})), ALLOC_STACK)
+                stringToUTF8OnStack("monetizationprogress"),
+                stringToUTF8OnStack(JSON.stringify(event.detail !== undefined ? event.detail : {}))
             );
         });
         document.monetization.addEventListener("monetizationstop", event => {
             {{{ makeDynCall("vii", "Context.listener") }}} (
-                allocate(intArrayFromString("monetizationstop"), ALLOC_STACK),
-                allocate(intArrayFromString(JSON.stringify(event.detail !== undefined ? event.detail : {})), ALLOC_STACK)
+                stringToUTF8OnStack("monetizationstop"),
+                stringToUTF8OnStack(JSON.stringify(event.detail !== undefined ? event.detail : {}))
             );
         });
     },
@@ -47,4 +47,4 @@ var WebMonetizationLibrary = {
 
 autoAddDeps(WebMonetizationLibrary, "$Context");
 
-mergeInto(LibraryManager.library, WebMonetizationLibrary);
+addToLibrary(WebMonetizationLibrary);
