@@ -36,7 +36,7 @@ The payment pointer is added to the website content using a `<meta>` tag in the 
 
 ## How to set up Web Monetization in Defold
 
-Enabling Web Monetization in a Defold game is a straightforward process. The steps involved depend on if you are adding Web Monetization to an existing project or if you are starting a new project.
+Enabling Web Monetization in a Defold game is a straightforward process.
 
 
 ### Creating a payment pointer
